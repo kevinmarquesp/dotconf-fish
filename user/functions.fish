@@ -44,7 +44,7 @@ function __get_aliases_for_bashrc -d 'print all bashrc aliases (no repeat)'
 end
 
 function __get_variables_for_bashrc -d 'print all variables in bashrc format'
-    set -l VARSRC "$HOME/.config/fish/base/varsrc.fish"
+    set -l VARSRC "$HOME/.config/fish/user/varsrc.fish"
 
     clean_common_file_content "$VARSRC" |
         awk '{

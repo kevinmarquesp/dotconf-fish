@@ -2,10 +2,10 @@ set fish_greeting
 
 set -g DESKTOP "$HOME/Desktop"
 
-source "$HOME/.config/fish/base/varsrc.fish"
-source "$HOME/.config/fish/base/aliasrc.fish"
-source "$HOME/.config/fish/base/keybinds.fish"
-source "$HOME/.config/fish/base/functions.fish"
+source "$HOME/.config/fish/user/varsrc.fish"
+source "$HOME/.config/fish/user/aliasrc.fish"
+source "$HOME/.config/fish/user/keybinds.fish"
+source "$HOME/.config/fish/user/functions.fish"
 
 fish_vi_key_bindings  #enambe vi mode
 
