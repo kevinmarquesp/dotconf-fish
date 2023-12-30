@@ -20,39 +20,38 @@ choice() {
 OPTIONS="cl"
 LONG_OPTIONS="copy,link"
 ARGS=$(getopt --options "${OPTIONS}" --longoptions "${LONG_OPTIONS}"\
-    --name "${0}" -- "${@}")
+              --name "${0}" -- "${@}")
 
 [ $? -ne 0 ] && throw "invalid options"
 eval "set -- ${ARGS}"
 unset OPTIONS LONG_OPTIONS ARGS
 
-FILE_NAME="fish"
+CONFIG_DIR_NAME="fish"
 opt_to_copy=
 opt_targets=
 
 process_target_content() {
-    local TARGET="${1}"
+    local TARGET_D="${1}"
 
-    choice "create a backup for ${TARGET}?" &&
-        mv "${TARGET}" "${TARGET}.$(date -I).bak"
+    choice "create a backup for ${TARGET_D}?" &&
+        mv "${TARGET_D}" "${TARGET_D}.$(date -I).bak"
 
-    rm -rf "${TARGET}"
+    rm -rf "${TARGET_D}"
 }
 
 main() {
     for target in ${opt_targets}""
     do
-        local TARGET="${target}/${FILE_NAME}"
+        local FISH_TARGET_D="${target}/${CONFIG_DIR_NAME}"
 
-        [ -e "${TARGET}" ] || [ -L "${TARGET}" ] &&
-            process_target_content "${TARGET}"
+        [ -e "${FISH_TARGET_D}" ] || [ -L "${FISH_TARGET_D}" ] &&
+            process_target_content "${FISH_TARGET_D}"
 
         if [ "${opt_to_copy}" = true ]
         then
-            cp -r "$(pwd)" "${TARGET}"
-            eval "rm -rf ${TARGET}/.*"  #remove git and unwanted files
-            rm -rf "${TARGET}/install.sh"
-            rm -rf "${TARGET}/tags"
+            cp -r "$(pwd)" "${FISH_TARGET_D}"
+            eval "rm -rf ${FISH_TARGET_D}/.*"  #remove git and unwanted files
+            rm -rf "${FISH_TARGET_D}/install.sh"
         else
             ln -s "$(pwd)" "${TARGET}"
         fi
@@ -73,13 +72,14 @@ do
         '--')  #end of flags, start of script paramters
             shift 1
             opt_targets="${HOME}/.config"
-            [ ${#} -ne 0 ] && opt_targets="${@}"
+            [ ${#} -ne 0 ] &&
+                opt_targets="${@}"
             break
         ;;
     esac
 done
 
-[ -n "${opt_to_copy}" ]  || throw "is to copy or install? use the flag options"
+[ -n "${opt_to_copy}" ] || throw "is to copy or link? use the flag options"
 [ -n "${opt_targets}" ] || throw "target directory wasen't specified"
 
 main
