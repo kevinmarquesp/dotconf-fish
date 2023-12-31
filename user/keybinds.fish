@@ -9,12 +9,18 @@ end
 
 bind -M insert \cp __vi_enter_normal_mode
 
+function __attach_tmux_session -d 'bind (alt) select a session to attach'
+    tmux attach -c (tmux ls | fzf --preview '' | cut -d: -f1)
+end
+
+bind -M insert \ea __attach_tmux_session
+
 function __select_and_load_tmuxifier_session -d 'bind (alt) attach a session'
     type tmuxifier &>/dev/null &&
         tmuxifier load-session (tmuxifier list-sessions | fzf --preview '')
 end
 
-bind -M insert \ea __select_and_load_tmuxifier_session
+bind -M insert \eL __select_and_load_tmuxifier_session
 
 function __create_new_tmuxifier_session -d 'bind (alt) create new session file'
     read -P 'fish (read) : specify a session name: ' r_session_name
