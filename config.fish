@@ -32,3 +32,5 @@ end
 
 test -f "/home/kevin/.xmake/profile" &&
     source "/home/kevin/.xmake/profile"
+
+eval (tmuxifier init - fish)

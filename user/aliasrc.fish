@@ -35,6 +35,8 @@ abbr uninstall 'sudo apt purge --autoremove'
 abbr install   'sudo apt install --no-install-recommends'
 abbr orphans   'sudo apt autoremove'
 
+alias tf 'tmuxifier'
+
 abbr py       'python3'
 abbr pip      'python3 -m pip'
 abbr pyserver 'python3 -m http.server 8080'
