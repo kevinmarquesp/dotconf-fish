@@ -24,7 +24,7 @@ end
 
 function __get_aliases_for_bashrc -d 'print all bashrc aliases (no repeat)'
     set -l BASH_ALIASRC "$HOME/.config/fish/bash/aliasrc.bash"
-    set -l FISH_ALIASRC "$HOME/.config/fish/base/aliasrc.fish"
+    set -l FISH_ALIASRC "$HOME/.config/fish/user/aliasrc.fish"
 
     set -l sed_delete_matches (clean_common_file_content "$BASH_ALIASRC" |
         sed 's/alias  *//;s/=.*//;/[^a-zA-Z0-9]/d' |
