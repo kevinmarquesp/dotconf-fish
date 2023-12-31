@@ -17,14 +17,14 @@ function clean_common_file_content -d 'removes # comments and blank lines'
 end
 
 function __get_prompt_for_bashrc -d 'cleaned version of the bash prompt script'
-    set -l BASH_PROMPT "$HOME/.config/fish/bash/prompt.bash"
+    set -l BASH_PROMPT "$G_FISH_CONFIG/bash/prompt.bash"
 
     clean_common_file_content "$BASH_PROMPT"
 end
 
 function __get_aliases_for_bashrc -d 'print all bashrc aliases (no repeat)'
-    set -l BASH_ALIASRC "$HOME/.config/fish/bash/aliasrc.bash"
-    set -l FISH_ALIASRC "$HOME/.config/fish/user/aliasrc.fish"
+    set -l BASH_ALIASRC "$G_FISH_CONFIG/bash/aliasrc.bash"
+    set -l FISH_ALIASRC "$G_FISH_CONFIG/user/aliasrc.fish"
 
     set -l sed_delete_matches (clean_common_file_content "$BASH_ALIASRC" |
         sed 's/alias  *//;s/=.*//;/[^a-zA-Z0-9]/d' |
@@ -44,7 +44,7 @@ function __get_aliases_for_bashrc -d 'print all bashrc aliases (no repeat)'
 end
 
 function __get_variables_for_bashrc -d 'print all variables in bashrc format'
-    set -l VARSRC "$HOME/.config/fish/user/varsrc.fish"
+    set -l VARSRC "$G_FISH_CONFIG/user/varsrc.fish"
 
     clean_common_file_content "$VARSRC" |
         awk '{
