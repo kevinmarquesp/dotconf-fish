@@ -9,6 +9,9 @@ alias ct 'mkdir /tmp/tmp.kevin; cd /tmp/tmp.kevin'
 alias md 'mkdir -vp'
 alias cp 'cp -r'
 
+alias gcz 'cz.sh'  #personal citizen script
+abbr gca  'git add :; git commit --amend -m (git log -1 --format="%s")'
+
 alias fzf 'fzf --preview "batcat --color=always --style=numbers              \
                                  --line-range=:500 {}"                       \
                --ansi                                                        \
