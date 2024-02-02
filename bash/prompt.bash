@@ -38,8 +38,8 @@ function dereference_gi {
 # run command before bash takes PS1 to build prompt
 PROMPT_CO="dereference_gi; $PROMPT_CO"
 
-if [ $USER = "root" ]; then
-    PS1="${clr_rd}[\u@\h] ${clr_re}\W ${GIT_HE}${clr_rd}\$ ${clr_re}"
+if [ $USER = "root" ]; then  #test
+    PS1="${clr_rd}[\u@\h] ${clr_re}\W ${GIT_HE}${clr_rd}# ${clr_re}"  #testing
 else
     PS1="${clr_gr}[\u@\h] ${clr_re}\W ${GIT_HE}${clr_gr}\$ ${clr_re}"
 fi

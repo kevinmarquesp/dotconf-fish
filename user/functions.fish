@@ -6,33 +6,23 @@ function tt -d 'touch command that created the parent directories if necessary'
     env -S "touch $argv"
 end
 
-function clean_common_file_content -d 'removes # comments and blank lines'
-    sed 's/  */ /g;s/^ *//;s/ *#.*$//;/^ *$/d' "$argv[1]" |
-        awk '{
-            if (sub(/ *\\\ *$/, ""))
-                printf "%s ", $0;
-            else
-                print $0;
-        }'
-end
-
 function __get_prompt_for_bashrc -d 'cleaned version of the bash prompt script'
     set -l BASH_PROMPT "$G_FISH_CONFIG/bash/prompt.bash"
 
-    clean_common_file_content "$BASH_PROMPT"
+    clean_content.awk "$BASH_PROMPT"
 end
 
 function __get_aliases_for_bashrc -d 'print all bashrc aliases (no repeat)'
     set -l BASH_ALIASRC "$G_FISH_CONFIG/bash/aliasrc.bash"
     set -l FISH_ALIASRC "$G_FISH_CONFIG/user/aliasrc.fish"
 
-    set -l sed_delete_matches (clean_common_file_content "$BASH_ALIASRC" |
+    set -l sed_delete_matches (clean_content.awk "$BASH_ALIASRC" |
         sed 's/alias  *//;s/=.*//;/[^a-zA-Z0-9]/d' |
         xargs -I{} printf '/^alias {}/d;/^abbr {}/d;')
 
-    clean_common_file_content "$BASH_ALIASRC"  #display exclusive for bash
+    clean_content.awk "$BASH_ALIASRC"  #display exclusive for bash
 
-    clean_common_file_content $FISH_ALIASRC |
+    clean_content.awk $FISH_ALIASRC |
         sed "$sed_delete_matches;s/abbr/alias/" |
         awk '{
             printf "%s %s=", $1, $2;
@@ -46,7 +36,7 @@ end
 function __get_variables_for_bashrc -d 'print all variables in bashrc format'
     set -l VARSRC "$G_FISH_CONFIG/user/varsrc.fish"
 
-    clean_common_file_content "$VARSRC" |
+    clean_content.awk "$VARSRC" |
         awk '{
             printf "export %s=", $3;
 
